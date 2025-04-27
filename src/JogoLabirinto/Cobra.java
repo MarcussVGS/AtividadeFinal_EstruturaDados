@@ -35,8 +35,9 @@ public class Cobra {
         return dados;
     }
     
+//Atributos,Coordenadas qual linha, qual coluna, qual matrix
     public boolean incurso (Coordenada aux, int linha, int coluna, int[][]matrix){
-        if ( (aux.passoFrente(linha, coluna, matrix, this)) == true ){
+        if ( (aux.passoFrenteTeste(linha, coluna, matrix, this)) == true ){
             incurso(aux, linha, coluna+1, matrix);
         }
         return true;

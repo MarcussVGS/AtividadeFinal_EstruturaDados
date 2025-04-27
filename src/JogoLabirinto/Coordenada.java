@@ -28,16 +28,39 @@ public class Coordenada {
         return true;
     }
     
-    public boolean passoFrente (int linha, int coluna, int[][]matrix, Cobra cb){
+    public boolean passoFrente (int linha, int coluna, int[][]matrix){
+        if ( matrix.length > linha || matrix[linha].length > coluna){ 
+            return false; }
+        if ( matrix[linha][coluna+1] == 1){ return false; }
+        if ( matrix[linha][coluna+1] == 0){ return true; }
+        if ( matrix[linha][coluna+1] == 2){ return true; }
+        if ( matrix[linha][coluna+1] == 3){ return true; }       
+        return true;
+    }
+    
+    public boolean passoFrenteTeste (int linha, int coluna, int[][]matrix, Cobra cb){
+         if ( coluna > 4){
+             throw new IndexOutOfBoundsException("Posiçao Inavalida no labirinto");
+         }
         if ( matrix[linha][coluna+1] == 1){ 
             System.out.println("Parede"); 
             return false;
         } else if ( matrix[linha][coluna+1] == 0){
             System.out.println("Rua"); 
+            cb.Passo(new Coordenada (linha, coluna+1));            
+            Coordenada coord = cb.Topo();
+            System.out.println(coord);            
+        } else if ( matrix[linha][coluna+1] == 2){
+            System.out.println("INICIO"); 
             cb.Passo(new Coordenada (linha, coluna+1));
             Coordenada coord = cb.Topo();
             System.out.println(coord);
-        }
+        }else if ( matrix[linha][coluna+1] == 3){
+            System.out.println("FIM"); 
+            cb.Passo(new Coordenada (linha, coluna+1));
+            Coordenada coord = cb.Topo();
+            System.out.println(coord);
+        } 
         return true;
     }
 
