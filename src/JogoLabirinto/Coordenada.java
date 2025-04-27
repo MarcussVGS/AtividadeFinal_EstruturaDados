@@ -16,4 +16,8 @@ public class Coordenada {
     public int getColuna() {
         return coluna;
     }
+    
+    public String toString(){
+        return "(" + linha + ", " + coluna + ")";
+    }
 }

@@ -4,23 +4,37 @@ import java.util.Stack;
 
 
 public class Cobra {
-    Stack<Coordenada> pilhaCaminho = new Stack<>();
+    private Stack<Coordenada> pilhaCaminho;
     
     public Cobra(){
+        pilhaCaminho = new Stack<>();
     }
     
-    public boolean Caminho (int linha, int coluna){
+    public boolean Caminho(Coordenada coord){
         //teste adicionar coordenadas
-        pilhaCaminho.push(new Coordenada(linha, coluna) );
+        pilhaCaminho.push(coord);
         return true;
     }
     
-    public boolean printCaminho (){
-        while (!pilhaCaminho.empty() ){
-            System.out.println("Caminho:"); 
-            System.out.println("\n" + pilhaCaminho.get(0) );
-        }
-        return true;
+    public Coordenada topo(){
+        if (!pilhaCaminho.isEmpty() ){
+            return pilhaCaminho.peek() ;
+        } else {
+            return null; }
     }
+    
+    public int tamanho(){
+        return pilhaCaminho.size();
+    }
+    
+    public String imprimirCaminho() {
+        String dados = "Conteudo da Pilha: ";
+        for (Coordenada c : pilhaCaminho) {
+            dados += "\n" + c;
+        }
+        return dados;
+    }
+    
+    
     
 }
