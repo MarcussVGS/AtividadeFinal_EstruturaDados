@@ -28,7 +28,8 @@ public class Coordenada {
         return true;
     }
     
-    public boolean passoFrente (int linha, int coluna, int[][]matrix){
+//    passo de verificaç?o a coluna da direita
+    public boolean passoDireita (int linha, int coluna, int[][]matrix){
         if ( matrix.length > linha || matrix[linha].length > coluna){ 
             return false; }
         if ( matrix[linha][coluna+1] == 1){ return false; }
@@ -37,6 +38,10 @@ public class Coordenada {
         if ( matrix[linha][coluna+1] == 3){ return true; }       
         return true;
     }
+    
+//    falta os metodos Esquerda, Acima e Abaixo
+    
+    
     
     public boolean passoFrenteTeste (int linha, int coluna, int[][]matrix, Cobra cb){
          if ( coluna > 4){
