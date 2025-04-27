@@ -10,13 +10,13 @@ public class Cobra {
         pilhaCaminho = new Stack<>();
     }
     
-    public boolean Caminho(Coordenada coord){
+    public boolean Passo(Coordenada coord){
         //teste adicionar coordenadas
         pilhaCaminho.push(coord);
         return true;
     }
     
-    public Coordenada topo(){
+    public Coordenada Topo(){
         if (!pilhaCaminho.isEmpty() ){
             return pilhaCaminho.peek() ;
         } else {
@@ -34,6 +34,15 @@ public class Cobra {
         }
         return dados;
     }
+    
+    public boolean incurso (Coordenada aux, int linha, int coluna, int[][]matrix){
+        if ( (aux.passoFrente(linha, coluna, matrix, this)) == true ){
+            incurso(aux, linha, coluna+1, matrix);
+        }
+        return true;
+    }
+    
+
     
     
     
