@@ -21,9 +21,9 @@ public class Aplicacao_JogoLabirinto {
         
         System.out.println("\nPasso frente");
 //Atributos, qual linha, qual coluna, qual matrix, quem(cobra)
-        cb.passoFrenteTeste(1, 0, labirinto, cb);
+//        cb.passoDireitaTeste(1, 0, labirinto, cb);
         
-        cb.incurso(cb, 1, 0, labirinto);
+        cb.incurso( 1, 0, labirinto);
         
         
         

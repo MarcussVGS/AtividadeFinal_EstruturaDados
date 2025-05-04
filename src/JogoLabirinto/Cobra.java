@@ -10,13 +10,19 @@ public class Cobra {
         pilhaCaminho = new Stack<>();
     }
     
-    public boolean Passo(Coordenada coord){
+    public boolean dentroLabirinto (int linha, int coluna, int[][]matrix){
+        if ( (0 > linha) || (matrix.length < linha) ){ return false;}
+        if ( (0 > coluna) || (matrix[linha].length < coluna) ){ return false;}
+        return true;
+    }
+    
+    public boolean salvarPasso(Coordenada coord){
         //teste adicionar coordenadas
         pilhaCaminho.push(coord);
         return true;
     }
     
-    public Coordenada Topo(){
+    public Coordenada exibirTopo(){
         if (!pilhaCaminho.isEmpty() ){
             return pilhaCaminho.peek() ;
         } else {
@@ -36,30 +42,31 @@ public class Cobra {
     }
     
 //Atributos,Coordenadas qual linha, qual coluna, qual matrix
-    public boolean incurso (int linha, int coluna, int[][]matrix){
-        if ( (passoFrenteTeste(linha, coluna, matrix, this)) == true ){
+    public void incurso (int linha, int coluna, int[][]matrix){
+        if (passoDireita(linha, coluna, matrix) == true){
             incurso(linha, coluna+1, matrix);
-        }
-        return true;
+        } 
     }
     
     // aqui usamos um metodo que carrega 3 informaç?e: a linha, a coluna e a matrix
 // a ser verificada
-    public boolean verificarValor (int linha, int coluna, int[][]matrix){
+    public int verificarValor (int linha, int coluna, int[][]matrix){
+        
         int valor = matrix[linha][coluna];
+        System.out.println(valor);
         switch  (valor){
             case 0: System.out.println("Rua");
             case 1: System.out.println("Parede");
             case 2: System.out.println("Entrada");
             case 3: System.out.println("Saida");
-            default: System.out.println("Fora do laberinto");
+            default: System.out.println("Fora do labirinto");
         }
-        return true;
+        return valor;
     }
     
 //    passo de verificaç?o a coluna da direita
-    public boolean passoFrente (int linha, int coluna, int[][]matrix){
-        if ( matrix.length > linha || matrix[linha].length > coluna){ 
+    public boolean passoDireita (int linha, int coluna, int[][]matrix){
+        if ( verificarValor(linha, coluna, matrix) > 3){ 
             return false; }
         if ( matrix[linha][coluna+1] == 1){ return false; }
         if ( matrix[linha][coluna+1] == 0){ return true; }
@@ -68,31 +75,41 @@ public class Cobra {
         return true;
     }
     
+//    passo de verificaç?o a coluna da direita
+    public boolean passoCima (int linha, int coluna, int[][]matrix){
+        if ( dentroLabirinto(linha, coluna, matrix) == false ){ return false; }
+        if ( matrix[linha][coluna] == 1){ return false; }
+        if ( matrix[linha][coluna] == 0){ return true; }
+        if ( matrix[linha][coluna] == 2){ return true; }
+        if ( matrix[linha][coluna] == 3){ return true; }       
+        return true;
+    }
+    
 //    falta os metodos Esquerda, Acima e Abaixo
     
     
     
-    public boolean passoFrenteTeste (int linha, int coluna, int[][]matrix, Cobra cb){
+    public boolean passoDireitaTeste (int linha, int coluna, int[][]matrix, Cobra cb){
          if ( coluna > 4){
-             throw new IndexOutOfBoundsException("Posiçao Inavalida no labirinto");
+            return false;
          }
         if ( matrix[linha][coluna+1] == 1){ 
             System.out.println("Parede"); 
             return false;
         } else if ( matrix[linha][coluna+1] == 0){
             System.out.println("Rua"); 
-            cb.Passo(new Coordenada (linha, coluna+1));            
-            Coordenada coord = cb.Topo();
+            cb.salvarPasso(new Coordenada (linha, coluna+1));            
+            Coordenada coord = cb.exibirTopo();
             System.out.println(coord);            
         } else if ( matrix[linha][coluna+1] == 2){
             System.out.println("INICIO"); 
-            cb.Passo(new Coordenada (linha, coluna+1));
-            Coordenada coord = cb.Topo();
+            cb.salvarPasso(new Coordenada (linha, coluna+1));
+            Coordenada coord = cb.exibirTopo();
             System.out.println(coord);
         }else if ( matrix[linha][coluna+1] == 3){
             System.out.println("FIM"); 
-            cb.Passo(new Coordenada (linha, coluna+1));
-            Coordenada coord = cb.Topo();
+            cb.salvarPasso(new Coordenada (linha, coluna+1));
+            Coordenada coord = cb.exibirTopo();
             System.out.println(coord);
         } 
         return true;
