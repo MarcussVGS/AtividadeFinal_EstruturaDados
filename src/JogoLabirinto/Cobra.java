@@ -41,49 +41,49 @@ public class Cobra {
         return dados;
     }
     
-//Atributos,Coordenadas qual linha, qual coluna, qual matrix
-    public void incurso (int linha, int coluna, int[][]matrix){
-        if (passoDireita(linha, coluna, matrix) == true){
-            incurso(linha, coluna+1, matrix);
-        } 
-    }
-    
     // aqui usamos um metodo que carrega 3 informaç?e: a linha, a coluna e a matrix
 // a ser verificada
     public int verificarValor (int linha, int coluna, int[][]matrix){
-        
         int valor = matrix[linha][coluna];
         System.out.println(valor);
         switch  (valor){
-            case 0: System.out.println("Rua");
-            case 1: System.out.println("Parede");
-            case 2: System.out.println("Entrada");
-            case 3: System.out.println("Saida");
-            default: System.out.println("Fora do labirinto");
+            case 0: System.out.println("Rua");     break;
+            case 1: System.out.println("Parede");  break;
+            case 2: System.out.println("Entrada"); break;
+            case 3: System.out.println("Saida");   break;
+            default: System.out.println("Fora do labirinto"); break;
         }
         return valor;
     }
     
+//Atributos,Coordenadas qual linha, qual coluna, qual matrix
+    public void incurso (int linha, int coluna, int[][]matrix){
+        if (passoDireita(linha, coluna, matrix) == true){
+            incurso(linha, coluna+1, matrix);
+        } else if (passoDireita(linha, coluna, matrix) == true){
+            incurso(linha, coluna+1, matrix);
+        }
+    }
+    
 //    passo de verificaç?o a coluna da direita
     public boolean passoDireita (int linha, int coluna, int[][]matrix){
-        if ( verificarValor(linha, coluna, matrix) > 3){ 
-            return false; }
-        if ( matrix[linha][coluna+1] == 1){ return false; }
-        if ( matrix[linha][coluna+1] == 0){ return true; }
-        if ( matrix[linha][coluna+1] == 2){ return true; }
-        if ( matrix[linha][coluna+1] == 3){ return true; }       
+        int valorDireita = matrix[linha][coluna+1];
+        if ( valorDireita > 3){  return false; }
+        if ( valorDireita == 1){ return false; }
+        if ( valorDireita >= 0){ return true; }     
         return true;
     }
     
 //    passo de verificaç?o a coluna da direita
     public boolean passoCima (int linha, int coluna, int[][]matrix){
-        if ( dentroLabirinto(linha, coluna, matrix) == false ){ return false; }
-        if ( matrix[linha][coluna] == 1){ return false; }
-        if ( matrix[linha][coluna] == 0){ return true; }
-        if ( matrix[linha][coluna] == 2){ return true; }
-        if ( matrix[linha][coluna] == 3){ return true; }       
+        if (linha == 1){ return false;}
+        int valorDireita = matrix[linha-1][coluna];
+        if ( valorDireita > 3){  return false; }
+        if ( valorDireita == 1){ return false; }
+        if ( valorDireita >= 0){ return true; }     
         return true;
     }
+ 
     
 //    falta os metodos Esquerda, Acima e Abaixo
     
