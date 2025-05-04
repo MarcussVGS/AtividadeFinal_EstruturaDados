@@ -83,6 +83,16 @@ public class Cobra {
         if ( valorDireita >= 0){ return true; }     
         return true;
     }
+    
+//    passo de verificaç?o a coluna da direita
+    public boolean passoBaixo (int linha, int coluna, int[][]matrix){
+        if (linha == matrix.length){ return false;}
+        int valorDireita = matrix[linha+1][coluna];
+        if ( valorDireita > 3){  return false; }
+        if ( valorDireita == 1){ return false; }
+        if ( valorDireita >= 0){ return true; }     
+        return true;
+    }
  
     
 //    falta os metodos Esquerda, Acima e Abaixo
