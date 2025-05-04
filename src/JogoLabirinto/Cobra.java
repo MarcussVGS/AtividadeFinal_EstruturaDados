@@ -57,18 +57,24 @@ public class Cobra {
     }
     
 //Atributos,Coordenadas qual linha, qual coluna, qual matrix
+    // TEM QUE TESTAR
     public void incurso (int linha, int coluna, int[][]matrix){
         if (passoDireita(linha, coluna, matrix) == true){
             incurso(linha, coluna+1, matrix);
-        } else if (passoDireita(linha, coluna, matrix) == true){
-            incurso(linha, coluna+1, matrix);
+        } else if (passoCima(linha, coluna, matrix) == true){
+            incurso(linha-1, coluna, matrix);
+        } else if (passoEsquerda(linha, coluna, matrix) == true){
+            incurso(linha, coluna-1, matrix);
+        } else if (passoBaixo(linha, coluna, matrix) == true){
+            incurso(linha+1, coluna, matrix);
         }
+        salvarPasso(new Coordenada (linha, coluna)); 
     }
     
 //    passo de verificaç?o a coluna da direita
     public boolean passoDireita (int linha, int coluna, int[][]matrix){
-        if (coluna == matrix[linha].length){ return false;}
-        int valorDireita = matrix[linha][coluna+1];
+        if (coluna == matrix[linha].length){ return false;} //verifica se o passo é possivel
+        int valorDireita = matrix[linha][coluna+1]; //salva o valor da posiç?o verificada
         if ( valorDireita > 3){  return false; }
         if ( valorDireita == 1){ return false; }
         if ( valorDireita >= 0){ return true; }     
