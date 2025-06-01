@@ -4,52 +4,67 @@ import java.awt.Point;
 import java.util.*;
 
 public class CobraResolvedora {
-    private static final int[] dx = {1, -1, 0, 0};
-    private static final int[] dy = {0, 0,  1, -1};
+    private static final int[] movimentoX = {1, -1, 0, 0}; //olhando pra direita e pra esquerda
+    private static final int[] movimentoY = {0, 0,  1, -1}; //olhando pra cima e pra baixo
 
-    public static List<Point> solveMazeBFS(int[][] maze, Point start) {
-        Queue<Point> queue = new LinkedList<>();
-        Map<Point, Point> parentMap = new HashMap<>(); // Para reconstruir o caminho
-        boolean[][] visited = new boolean[maze.length][maze[0].length];
+    public static List<Point> resolveLab(int[][] lab, Point inicio) {
+        Queue<Point> filaExploracao = new LinkedList<>(); // Lista de campos a serem explocarados
+        Map<Point, Point> mapaCaminho = new HashMap<>(); // Para reconstruir o caminho
+//           /\      /\    
+ // ligação filho -> pai
+        boolean[][] visitado = new boolean[lab.length][lab[0].length]; // Mapa/matriz de visitas
         
-        queue.add(start);
-        visited[start.x][start.y] = true;
-        parentMap.put(start, null);
+//      inicializa as "listas"
+        filaExploracao.add(inicio);
+        visitado[inicio.x][inicio.y] = true; //marca cin visitado a primeira pos
+        mapaCaminho.put(inicio, null); // inicio n tem pai por ser o primeiro
 
-        while (!queue.isEmpty()) {
-            Point current = queue.poll();
+//        continua verificando ate acabar os campos 
+        while (!filaExploracao.isEmpty()) {
+            Point pontoAtual = filaExploracao.poll();
+//          verificação do campo atual
+            System.out.println("posição atual: " + (pontoAtual.x+1) +"," + (pontoAtual.y+1) );
             
-            if (maze[current.x][current.y] == 3) {
-                return reconstructPath(parentMap, current);
+//      se o ponto atul a ser verificado foi a saida, inicia o metodod e montar caminho
+            if (lab[pontoAtual.x][pontoAtual.y] == 3) {
+                System.out.println("");
+                return montarCaminho(mapaCaminho, pontoAtual);
             }
-
+//      se não, parte para verificar todas as posições ao redor do ponto atual
             for (int i = 0; i < 4; i++) {
-                int nextX = current.x + dx[i];
-                int nextY = current.y + dy[i];
-                
-                if (isValid(maze, nextX, nextY, visited)) {
-                    Point next = new Point(nextX, nextY);
-                    queue.add(next);
-                    visited[nextX][nextY] = true;
-                    parentMap.put(next, current);
+                int proxX = pontoAtual.x + movimentoX[i];
+                int proxY = pontoAtual.y + movimentoY[i];
+//          se a posição for valida ele lê as possibilidades apartir daquela posição
+//          e adiciona as validas para fazer a verificação e assim por diante
+                if (posValida(lab, proxX, proxY, visitado)) {
+                    Point proxPonto = new Point(proxX, proxY);
+                    filaExploracao.add(proxPonto);
+                    visitado[proxX][proxY] = true;
+                    mapaCaminho.put(proxPonto, pontoAtual);
+//              verificação da leitura do campo
+                System.out.println("posição lida: " + (proxPonto.x+1) +"," + (proxPonto.y+1) );
                 }
             }
         }
         return Collections.emptyList(); // Sem caminho
     }
 
-    private static boolean isValid(int[][] maze, int x, int y, boolean[][] visited) {
-        return x >= 0 && x < maze.length && y >= 0 && y < maze[0].length &&
-               maze[x][y] != 1 && !visited[x][y];
+    private static boolean posValida(int[][] maze, int x, int y, boolean[][] visited) {
+        return x >= 0 && x < maze.length && //n pode ser menor que zero ou maior que o tamanho da linha
+               y >= 0 && y < maze[0].length && //n pode ser menor que zero ou maior que o tamanho da coluna
+               maze[x][y] != 1 //não pode ser 1 (parede)
+               && !visited[x][y]; //verifica se ja foi visitado na matriz de visitas
     }
 
-    private static List<Point> reconstructPath(Map<Point, Point> parentMap, Point end) {
-        LinkedList<Point> path = new LinkedList<>();
-        Point current = end;
-        while (current != null) {
-            path.addFirst(current);
-            current = parentMap.get(current);
+    private static List<Point> montarCaminho(Map<Point, Point> mapaCaminho, Point posFinal) {
+        LinkedList<Point> caminho = new LinkedList<>();
+        Point atual = posFinal;
+        while (atual != null) {
+            caminho.addFirst(atual);
+            atual = mapaCaminho.get(atual);
         }
-        return path;
+        return caminho;
     }
+    
+    
 }

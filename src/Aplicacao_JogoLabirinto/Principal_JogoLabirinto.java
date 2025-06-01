@@ -24,39 +24,39 @@ public class Principal_JogoLabirinto {
         Point start = new Point(4,1);
         
         // 2. Resolver o labirinto
-        List<Point> solutionPath = CobraResolvedora.solveMazeBFS(labirinto2, start);
+        List<Point> caminhoEncontrado = CobraResolvedora.resolveLab(labirinto2, start);
         
         // 3. Imprimir as coordenadas
-        if(solutionPath.isEmpty()) {
+        if(caminhoEncontrado.isEmpty()) {
             System.out.println("Labirinto sem solução!");
         } else {
-            System.out.println("Caminho encontrado (" + solutionPath.size() + " passos):");
+            System.out.println("Caminho encontrado (" + caminhoEncontrado.size() + " passos):");
 
             // Imprimir formato 1: Linha única
             System.out.print("Coordenadas: ");
-            for(Point p : solutionPath) {
+            for(Point p : caminhoEncontrado) {
                 System.out.print("(" + p.x + "," + p.y + ") ");
             }
 
             // Imprimir formato 2: Lista numerada
             System.out.println("\n\nDetalhamento:");
-            for(int i = 0; i < solutionPath.size(); i++) {
-                Point p = solutionPath.get(i);
-                System.out.println((i+1) + ". Linha: " + p.x + " | Coluna: " + p.y);
+            for(int i = 0; i < caminhoEncontrado.size(); i++) {
+                Point ponto = caminhoEncontrado.get(i);
+                System.out.println((i+1) + ". Linha: " + (ponto.x + 1) + " | Coluna: " + (ponto.y + 1));
             }
 
             // Imprimir formato 3: Setas (para visualização sequencial)
             System.out.print("\nPercurso: \n");
-            for(int i = 0; i < solutionPath.size(); i++) {
-                Point current = solutionPath.get(i);
-                System.out.print("(" + current.x + "," + current.y + ")");
+            for(int i = 0; i < caminhoEncontrado.size(); i++) {
+                Point atual = caminhoEncontrado.get(i);
+                System.out.print("(" + atual.x + "," + atual.y + ")");
 
-                if(i < solutionPath.size() - 1) {
-                    Point next = solutionPath.get(i+1);
+                if(i < caminhoEncontrado.size() - 1) {
+                    Point prox = caminhoEncontrado.get(i+1);
                     // Determinar direção do movimento
-                    if(next.x > current.x) System.out.print(".B -");
-                    else if(next.x < current.x) System.out.print(".C -");
-                    else if(next.y > current.y) System.out.print(".D -");
+                    if(prox.x > atual.x) System.out.print(".B -");
+                    else if(prox.x < atual.x) System.out.print(".C -");
+                    else if(prox.y > atual.y) System.out.print(".D -");
                     else System.out.print(".E -");
                 } 
                 if(i > 0 && i % 4 == 0) System.out.println();
