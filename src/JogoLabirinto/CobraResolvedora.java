@@ -66,5 +66,44 @@ public class CobraResolvedora {
         return caminho;
     }
     
-    
+    public static void printResolucao (int [][] labirinto, Point inicio){
+//      lista populada pelo resolução
+        List<Point> caminhoEncontrado = CobraResolvedora.resolveLab(labirinto, inicio);
+        
+//      valida se o caminho esta populado, se vazio retorna sem solução
+        if(caminhoEncontrado.isEmpty()) {
+            System.out.println("Labirinto sem soluç?o!");
+        } else {
+            System.out.println("Caminho encontrado (" + caminhoEncontrado.size() + " passos):");
+
+            System.out.print("Coordenadas: ");
+            for(Point p : caminhoEncontrado) {
+                System.out.print("(" + p.x + "," + p.y + ") ");
+            }
+
+            System.out.println("\n\nDetalhamento:");
+//          ciclo de repetição que imprimi as linhas e colunas mapeadas
+            for(int i = 0; i < caminhoEncontrado.size(); i++) {
+                Point ponto = caminhoEncontrado.get(i);
+                System.out.println((i+1) + ". Linha: " + (ponto.x + 1) + " | Coluna: " + (ponto.y + 1));
+            }
+
+            System.out.print("\nPercurso: \n");
+//          ciclo de repetição que imprimi as corodenadas e a direção do passo dado
+            for(int i = 0; i < caminhoEncontrado.size(); i++) {
+                Point atual = caminhoEncontrado.get(i);
+                System.out.print("(" + atual.x + "," + atual.y + ")");
+
+                if(i < caminhoEncontrado.size() - 1) {
+                    Point prox = caminhoEncontrado.get(i+1);
+                    // Determinar direç?o do movimento
+                    if(prox.x > atual.x) System.out.print(".B -");      //B - baixo
+                    else if(prox.x < atual.x) System.out.print(".C -"); //C - cima
+                    else if(prox.y > atual.y) System.out.print(".D -"); //D - direita
+                    else System.out.print(".E -");                      //E - esquerda
+                } 
+                if(i > 0 && i % 4 == 0) System.out.println();
+            }
+        }
+    }
 }
