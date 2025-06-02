@@ -1,34 +1,24 @@
 package Aplicacao_JogoLabirinto;
 
 import JogoLabirinto.*;
+import Labirinto.*;
 import java.awt.Point;
 import java.util.List;
 
 public class Principal_JogoLabirinto {
 
     public static void main(String[] args) {
-        int [][] labirinto1 = new int[][]{
-            {1,1,1,1,1},
-            {2,0,0,0,3},
-            {1,1,1,1,1}
-        };
-        
-        int [][] labirinto2 = new int[][]{
-            {1,1,1,1,1,1,1,1,1},
-            {1,0,0,0,0,0,0,0,0},
-            {1,0,1,0,1,1,0,1,0},
-            {1,0,0,0,0,0,1,0,3},
-            {1,2,1,0,1,0,0,1,1}
-        };
+//      escolhe um dos labirintos para usar
+        int [][] lab = Labirintos.labirinto1;
         
         Point start = new Point(4,1);
         
         // 2. Resolver o labirinto
-        List<Point> caminhoEncontrado = CobraResolvedora.resolveLab(labirinto2, start);
+        List<Point> caminhoEncontrado = CobraResolvedora.resolveLab(lab, start);
         
         // 3. Imprimir as coordenadas
         if(caminhoEncontrado.isEmpty()) {
-            System.out.println("Labirinto sem solução!");
+            System.out.println("Labirinto sem soluç?o!");
         } else {
             System.out.println("Caminho encontrado (" + caminhoEncontrado.size() + " passos):");
 
@@ -45,7 +35,7 @@ public class Principal_JogoLabirinto {
                 System.out.println((i+1) + ". Linha: " + (ponto.x + 1) + " | Coluna: " + (ponto.y + 1));
             }
 
-            // Imprimir formato 3: Setas (para visualização sequencial)
+            // Imprimir formato 3: Setas (para visualizaç?o sequencial)
             System.out.print("\nPercurso: \n");
             for(int i = 0; i < caminhoEncontrado.size(); i++) {
                 Point atual = caminhoEncontrado.get(i);
@@ -53,7 +43,7 @@ public class Principal_JogoLabirinto {
 
                 if(i < caminhoEncontrado.size() - 1) {
                     Point prox = caminhoEncontrado.get(i+1);
-                    // Determinar direção do movimento
+                    // Determinar direç?o do movimento
                     if(prox.x > atual.x) System.out.print(".B -");
                     else if(prox.x < atual.x) System.out.print(".C -");
                     else if(prox.y > atual.y) System.out.print(".D -");
