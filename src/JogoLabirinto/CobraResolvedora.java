@@ -7,7 +7,7 @@ public class CobraResolvedora {
     private static final int[] movimentoX = {1, -1, 0, 0}; //olhando pra direita e pra esquerda
     private static final int[] movimentoY = {0, 0,  1, -1}; //olhando pra cima e pra baixo
 
-    public static List<Point> resolveLab(int[][] lab, Point inicio) {
+    private static List<Point> resolveLab(int[][] lab, Point inicio) {
         Queue<Point> filaExploracao = new LinkedList<>(); // Lista de campos a serem explocarados
         Map<Point, Point> mapaCaminho = new HashMap<>(); // Para reconstruir o caminho
 //           /\      /\    
@@ -57,8 +57,10 @@ public class CobraResolvedora {
     }
 
     private static List<Point> montarCaminho(Map<Point, Point> mapaCaminho, Point posFinal) {
+//      cria a lista que vai receber o percurso
         LinkedList<Point> caminho = new LinkedList<>();
         Point atual = posFinal;
+//      ciclo qu vai pegar as informações e colocalas na ordem para exibir
         while (atual != null) {
             caminho.addFirst(atual);
             atual = mapaCaminho.get(atual);
